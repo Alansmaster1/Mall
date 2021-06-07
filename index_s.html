@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mall</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="css/mall.css">
+</head>
+<body>
+	<!-- 顶部导航条 -->
+	<div class="nav">
+		<ul>
+			<li>
+				<script src="php/loginState_s.php"></script>
+			</li>
+		</ul>
+	</div>
+	<!-- 内容主题 -->
+	<div class="container">
+		<!-- 商品显示区域 -->
+		<div class="content">
+			<div class="item-class">
+				<div class="item-class-head">
+					<span class="item-class-title">负责商品</span>
+				</div>
+				<div class="item-class-content" >
+					<div class="item-content-bottom" >
+						<script src="php/sale_item.php"></script>
+					</div>
+				</div>
+				<button id="add-to-car" class="btn-add-buy-car btn btn-danger">
+                    <a href="item_add.html">添加商品</a>
+                </button>
+			</div>
+
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="clearfix"></div>
+	</footer>
+
+</body>
+<script>
+	$('#logout').click(function(){
+		var r=confirm("确认退出");
+		if(r==true){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200)
+					location.href="login_s.html";
+			};
+			xhttp.open("GET","php/logout_s.php",true);
+			xhttp.send();
+		}
+	});
+	function modify(obj){
+		var name = $(obj).find('.name')[0].innerHTML;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200)
+				location.href = "item_modify.html";
+		};
+		xhttp.open("GET","php/detail_save.php?name="+name,true);
+		xhttp.send();
+	}
+</script>
+</html>

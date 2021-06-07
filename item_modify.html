@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/mall.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航条 -->
+    <div class="nav">
+        <ul>
+            <li>
+                <script src="php/loginState_s.php"></script>
+            </li>
+        </ul>
+    </div>
+    <!-- 商品信息展示 -->
+    <div class="item-detail-show">
+        <div class="item-detail-right">
+            <div class="item-detail-title">
+                <p>
+                    商品名
+                </p>
+            </div>
+            <div class="item-detail-price-row">
+                <div class="item-price-left">
+                    <div class="item-price-row">
+                        <p>
+                            <span class="item-price-title">价 格</span>
+                            <span class="item-price"></span>
+                            <input type="text" name="price">
+                        </p>
+                        <p>
+                            <span class="item-price-title">存 货</span>
+                            <span class="item-amount"></span>
+                            <input type="text" name="amount">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-buy-car-box">
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="modify()">
+                    确认修改
+                </button>
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="takeOff()">
+                    下架商品
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 商品详细展示 -->
+    <div class="item-intro-show">
+        <div class="item-intro-detail">
+            <div class="item-intro-nav">
+                <p>商品介绍</p>
+            </div>
+            <div>
+                <p>介绍文本</p>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="clearfix"></div>
+    </footer>
+</body>
+<script type="text/javascript">
+    $('#logout').click(function(){
+        var r=confirm("确认退出");
+        if(r==true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status==200){
+                    location.href="login_s.html";
+                }
+            };
+            xhttp.open("GET","php/logout_s.php",true);
+            xhttp.send();
+        }
+    })
+
+    function modify(){
+        var name = document.getElementsByClassName("item-detail-title")[0].innerText;
+        var price = $("input[name='price']").val();
+        var amount = $("input[name='amount']").val();
+        if(price == null || price == "" || amount == null || amount == ""){
+            alert("填完整信息");
+            return;
+        }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                location.href="index_s.html";
+            }
+        };
+        xhttp.open("GET","php/item_modify.php?name="+name+"&price="+price+"&amount="+amount,true);
+        xhttp.send();
+    }
+
+    function takeOff(){
+        var name = document.getElementsByClassName("item-detail-title")[0].innerText;
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                location.href = "index_s.html";
+            }
+        };
+        xhttp.open("GET","php/takeOff.php?itemname="+name,true);
+        xhttp.send();
+    }
+
+    function accessItemDetail(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                var json = JSON.parse(xhttp.responseText);
+                document.getElementsByClassName('item-detail-title')[0].innerText = json[0].name;
+                document.getElementsByClassName('item-price')[0].innerText = "￥" + json[0].price;
+                document.getElementsByClassName('item-amount')[0].innerText = json[0].amount;
+            }
+        };
+        xhttp.open("GET","php/detail_unset.php",true);
+        xhttp.send();
+    }
+    accessItemDetail();
+
+</script>
+</html>

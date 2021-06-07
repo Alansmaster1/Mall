@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/mall.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+	<!-- 顶部导航条 -->
+    <div class="nav">
+        <ul>
+			<li>
+				<a href="index_c.html">商城首页</a>
+			</li>
+			<li>
+				<script src="php/loginState.php"></script>
+				<a href="signup.html">注册</a>
+			</li>
+        </ul>
+    </div>
+	<div class="add-info-box-container">
+		<div class="add-info-box">
+			<div class="add-info-detail">
+				<script src="php/car.php"></script>
+					<!-- <div class="add-info-intro>
+						
+						<p class="name">商品名</p>
+						<p class="item-price-title">总 价
+							<span class="item-price item-price-total"></span>
+						</p>
+						<p class="item-amount-title item-price-title">数 量
+							<span class="item-price item-amount"></span>
+						</p>
+						<button class="btn-car btn-car-to-detail" onClick="detail(this)">查看
+							<span class="name">商品名</span>
+						</button>
+						<button class="btn-car btn-car-to-detail btn-cancel">放弃购买
+							<span class="name">商品名</span>
+						</button>
+					</div> -->
+				</div>
+			</div>
+			<!-- <div class="car-btn-group">
+				<div class="car-btn-row">
+					<button class="btn-car btn-car-to-pay">结算</button>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</body>
+<script>
+	function detail(obj){
+		var name = $(obj).find('.name')[0].innerHTML;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				location.href = "item_detail.html";
+			}
+		};
+		xhttp.open("GET","php/detail_save.php?name="+name,true);
+		xhttp.send();
+	}
+	function cancelItem(obj){
+		var name = $(obj).find('.name')[0].innerHTML;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				location.reload();
+			}
+		};
+		xhttp.open("GET","php/cancel_item.php?itemname="+name,true);
+		xhttp.send();
+	}
+	function pay(obj){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4&& this.status == 200){
+				confirm(this.responseText);
+				location.reload();
+			}
+		};
+		xhttp.open("GET","php/pay.php?sum="+document.getElementById('sum').innerHTML,true);
+		xhttp.send();
+	}
+	$('#logout').click(function(){
+		var r=confirm("确认退出");
+		if(r==true){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					location.href="index_c.html";
+				}
+			};
+			xhttp.open("GET","php/logout.php?",true);
+			xhttp.send();
+		}
+	})
+
+</script>
+</html>

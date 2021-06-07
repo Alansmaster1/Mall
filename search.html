@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>商品搜索</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="css/mall.css">
+</head>
+
+<body class="search-page">
+	<!-- 顶部导航条 -->
+	<div class="nav">
+		<ul>
+			<ul>
+				<li class="nav-pull-down my-shop">
+					<a id="car">购物车</a>
+				</li>
+				<li>
+					<script src="php/loginState.php"></script>
+					<a href="signup.html">注册</a>
+				</li>
+			</ul>
+		</ul>
+	</div>
+	<!-- 搜索框 -->
+	<div class="search">
+		<div class="search-body">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="搜索框" name="search-body">
+				<span class="input-group-btn">
+			        <button class="btn btn-danger btn-search" type="button">
+						<i class="fa fa-search"></i>
+					</button>
+			    </span>
+			</div>
+		</div>
+	</div>
+	<!-- 内容主题开始 -->
+	<div class="content">
+		<div class="item-class">
+			<div class="item-class-head">
+				<span class="item-class-title">商品</span>
+			</div>
+			<div class="item-class-content" >
+				<div class="item-content-bottom">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- 底部 -->
+	<footer class="footer">
+		<div class="clearfix"></div>
+	</footer>
+
+
+</body>
+<script src="js/mall.js"></script>
+<script>
+	$('.btn-search').click(function(){
+		var itemname = $('input[name=search-body]').val();
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200)
+				console.log(this.responseText);
+				document.getElementsByClassName('item-content-bottom')[0].innerHTML = this.responseText.toString();
+		};
+		xhttp.open("GET","php/search.php?itemname="+itemname,true);
+		xhttp.send();
+	})
+</script>
+</html>

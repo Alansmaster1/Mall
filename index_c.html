@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mall</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="css/mall.css">
+</head>
+<body>
+	<!-- 顶部导航条 -->
+	<div class="nav">
+		<ul>
+			<li class="nav-pull-down my-shop">
+				<a id="car">购物车</a>
+			</li>
+			<li>
+				<script src="php/loginState.php"></script>
+				<a href="signup.html">注册</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 内容主题 -->
+	<div class="container">
+		<!-- 搜索框 -->
+		<div class="search">
+			<div class="search-body">
+				<div class="input-group">
+			      <input type="text" class="form-control" placeholder="搜索框">
+			      <span class="input-group-btn">
+			        <a href="search.html"><button class="btn btn-danger btn-search" type="button"><i class="fa fa-search"></i></button></a>
+			      </span>
+			    </div>
+			</div>
+		</div>
+
+		<!-- 商品显示区域 -->
+		<div class="content">
+			<div class="item-class">
+				<div class="item-class-head">
+					<span class="item-class-title">商品</span>
+				</div>
+				<div class="item-class-content" >
+					<div class="item-content-bottom" >
+						<script src="php/mall.php"></script>
+						<!-- <div class="item-content-bottom-img">
+							<img src="img/item-computer-1-6.jpg">
+						</div>
+						<div class="item-content-bottom-img">
+							<img src="img/item-computer-1-7.jpg">
+						</div>
+						<div class="item-content-bottom-img">
+							<img src="img/item-computer-1-8.jpg">
+						</div> -->
+					</div>
+				</div>
+				<!-- <div class="item-class-content">
+					<div class="item-content-bottom">
+						<div class="item-content-bottom-img">
+							<img src="img/item-computer-2-6.jpg">
+						</div>
+						<div class="item-content-bottom-img">
+							<img src="img/item-computer-2-7.jpg">
+						</div>
+						<div class="item-content-bottom-img">
+							<img src="img/item-computer-2-8.jpg">
+						</div>
+					</div>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="clearfix"></div>
+	</footer>
+
+</body>
+<script src="js/mall.js"></script>
+</html>

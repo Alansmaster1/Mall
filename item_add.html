@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/mall.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航条 -->
+    <div class="nav">
+        <ul>
+            <li>
+                <script src="php/loginState_s.php"></script>
+            </li>
+        </ul>
+    </div>
+    <!-- 商品信息展示 -->
+    <div class="item-detail-show">
+        <div class="item-detail-right">
+            <div class="item-detail-title">
+                <p>
+                    <input type="text" name="itemname">
+                </p>
+            </div>
+            <div class="item-detail-price-row">
+                <div class="item-price-left">
+                    <div class="item-price-row">
+                        <p>
+                            <span class="item-price-title">价 格</span>
+                            <span class="item-price"></span>
+                            <input type="text" name="price">
+                        </p>
+                        <p>
+                            <span class="item-price-title">存 货</span>
+                            <span class="item-amount"></span>
+                            <input type="text" name="amount">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-buy-car-box">
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="add()">
+                    确认
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 商品详细展示 -->
+    <div class="item-intro-show">
+        <div class="item-intro-detail">
+            <div class="item-intro-nav">
+                <p>商品介绍</p>
+            </div>
+            <div>
+                <p>介绍文本</p>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="clearfix"></div>
+    </footer>
+</body>
+<script type="text/javascript">
+    $('#logout').click(function(){
+        var r=confirm("确认退出");
+        if(r==true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status==200){
+                    location.href="login_s.html";
+                }
+            };
+            xhttp.open("GET","php/logout_s.php",true);
+            xhttp.send();
+        }
+    })
+    function add(){
+        var itemname = $("input[name='itemname']").val();
+        var price = $("input[name='price']").val();
+        var amount = $("input[name='amount']").val();
+        if(itemname == null && itemname== "" ){
+            alert("商品名不得为空");
+            return;
+        }
+        if(price == null && price== "" ){
+            alert("价格不得为空");
+            return;
+        }
+        if(amount == null && amount== "" ){
+            alert("数量不得为空");
+            return;
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                location.href = "index_s.html";
+            }
+        };
+        xhttp.open("GET","php/item_add.php?itemname="+itemname+"&price="+price+"&amount="+amount,true);
+        xhttp.send();
+    }
+
+</script>
+</html>

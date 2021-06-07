@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/mall.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航条 -->
+    <div class="nav">
+        <ul>
+            <li class="nav-pull-down my-shop">
+                <a id="car">购物车</a>
+            </li>
+            <li>
+                <a href="index_c.html">商城首页</a>
+                <script src="php/loginState.php"></script>
+                <a href="signup.html">注册</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 商品信息展示 -->
+    <div class="item-detail-show">
+        <div class="item-detail-right">
+            <div class="item-detail-title">
+                <p>
+                    商品名
+                </p>
+            </div>
+            <div class="item-detail-price-row">
+                <div class="item-price-left">
+                    <div class="item-price-row">
+                        <p>
+                            <span class="item-price-title">价 格</span>
+                            <span class="item-price"></span>
+                        </p>
+                        <p>
+                            <span class="item-price-title">存 货</span>
+                            <span class="item-amount"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-buy-car-box">
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="addToCar()">
+                    加入购物车
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 商品详细展示 -->
+    <div class="item-intro-show">
+        <div class="item-intro-detail">
+            <div class="item-intro-nav">
+                <p>商品介绍</p>
+            </div>
+            <div>
+                <p>介绍文本</p>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="clearfix"></div>
+    </footer>
+</body>
+<script type="text/javascript">
+    $('#car').click(function(){
+        var obj = document.getElementById('login');
+        if(obj==null){
+            location.href="car.html";
+        }
+    })
+
+    $('#logout').click(function(){
+        var r=confirm("确认退出");
+        if(r==true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status==200){
+                    location.reload();
+                }
+            };
+            xhttp.open("GET","php/logout.php",true);
+            xhttp.send();
+        }
+    })
+
+    function addToCar(){
+        var r=confirm("是否加入购物车?");
+        if(r == true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    if(xhttp.responseText == "Update" || xhttp.responseText=="Insert"){
+                        var r=confirm("完成");
+                        location.reload();
+                        return;
+                    } 
+                } 
+            };
+            xhttp.open("GET","php/add_to_car.php",true);
+            xhttp.send();
+        }
+    }
+
+    function accessItemDetail(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                var json = JSON.parse(xhttp.responseText);
+                document.getElementsByClassName('item-detail-title')[0].innerText = json[0].name;
+                document.getElementsByClassName('item-price')[0].innerText = "￥" + json[0].price;
+                document.getElementsByClassName('item-amount')[0].innerText = json[0].amount;
+            }
+        };
+        xhttp.open("GET","php/detail_unset.php",true);
+        xhttp.send();
+    }
+    accessItemDetail();
+
+</script>
+</html>

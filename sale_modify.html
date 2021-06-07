@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/mall.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航条 -->
+    <div class="nav">
+        <ul>
+            <li>
+                <script src="php/loginState_s.php"></script>
+            </li>
+        </ul>
+    </div>
+    <!-- 商品信息展示 -->
+    <div class="item-detail-show">
+        <div class="item-detail-right">
+            <div class="item-detail-title">
+                <p>
+                    销售员
+                </p>
+            </div>
+            <div class="item-detail-price-row">
+                <div class="item-price-left">
+                    <div class="item-price-row">
+                        <p>
+                            <span class="item-price-title">口 令</span>
+                            <span class="item-price"></span>
+                            <input type="text" name="passwd">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-buy-car-box">
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="modifySale()">
+                    确认修改
+                </button>
+                <button id="add-to-car" class="btn-add-buy-car btn btn-danger" onclick="layOff()">
+                    删除销售
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="item-class">
+            <div class="item-class-head">
+                <span class="item-class-title">负责商品</span>
+            </div>
+            <div class="item-class-content" >
+                <div class="item-content-bottom" >
+                    <script src="php/sale_item.php"></script>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+</body>
+<script type="text/javascript">
+    $('#logout').click(function(){
+        var r=confirm("确认退出");
+        if(r==true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status==200){
+                    location.href="login_m.html";
+                }
+            };
+            xhttp.open("GET","php/logout_m.php",true);
+            xhttp.send();
+        }
+    })
+
+    function modifySale(){
+        var name = document.getElementsByClassName("item-detail-title")[0].innerText;
+        var passwd = $("input[name='passwd']").val();
+        if(passwd == null || passwd == ""){
+            alert("填完整信息");
+            return;
+        }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                location.href="index_m.html";
+            }
+        };
+        xhttp.open("GET","php/sale_modify.php?name="+name+"&passwd="+passwd,true);
+        xhttp.send();
+    }
+
+    function layOff(){
+        var name = document.getElementsByClassName("item-detail-title")[0].innerText;
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                location.href = "index_m.html";
+            }
+        };
+        xhttp.open("GET","php/layOff.php?salename="+name,true);
+        xhttp.send();
+    }
+
+    function accessItemDetail(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                var json = JSON.parse(xhttp.responseText);
+                document.getElementsByClassName('item-detail-title')[0].innerText = json[0].name;
+                document.getElementsByClassName('item-price')[0].innerText = json[0].passwd;
+            }
+        };
+        xhttp.open("GET","php/sale_unset.php",true);
+        xhttp.send();
+    }
+    accessItemDetail();
+
+</script>
+</html>
